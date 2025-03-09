@@ -1,11 +1,11 @@
 
 # Beginner Projects 
-- [ ] Binary Classifications with EBMs\
-      - Train an EBM as a binary classifier on MNIST. \
-      - Compare it with logistic regression or neural networks. \
-      - Experiment with different energy functions. \
-- [ ] Denoising with EBMs\ 
-      - Train an EBM for image denoising. \ 
+- [ ] Binary Classifications with EBMs<br /> 
+      - Train an EBM as a binary classifier on MNIST.<br /> 
+      - Compare it with logistic regression or neural networks. <br /> 
+      - Experiment with different energy functions. <br /> 
+- [ ] Denoising with EBMs<br /> 
+      - Train an EBM for image denoising.<br /> 
       - Add noise to MNIST/CIFAR-10 images and train the model to reconstruct the clean image. \
       - Compare with traditional denoising autoencoders.
 - [ ] Unsupervised Representation Learning \ 
