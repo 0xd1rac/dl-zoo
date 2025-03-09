@@ -1,6 +1,6 @@
 
 # Beginner Projects 
-- [ ] Binary Classifications with EBMs \
+- [ ] Binary Classifications with EBMs\
       - Train an EBM as a binary classifier on MNIST. \
       - Compare it with logistic regression or neural networks. \
       - Experiment with different energy functions. 
