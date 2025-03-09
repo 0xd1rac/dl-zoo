@@ -22,26 +22,26 @@
       - Compare with autoencoder-based anomaly detection.
 
 # Intermediate Projects 
-- [ ] Contrastive Divergence Training on CIFAR-10\ 
-      - Implement Contrastive Divergence (CD-k) to train an EBM on CIFAR-10.\ 
-      - Use Gibbs sampling to refine the generated images.\ 
+- [ ] Contrastive Divergence Training on CIFAR-10      \ 
+      - Implement Contrastive Divergence (CD-k) to train an EBM on CIFAR-10. \ 
+      - Use Gibbs sampling to refine the generated images.      \ 
       - Compare CD-1 vs. CD-10 for training stability.
-- [ ] EBMs for Image Inpainting\ 
-      - Train an EBM for image inpainting.\ 
-      - Mask out parts of CIFAR-10 images and use Langevin dynamics to complete them.\ 
+- [ ] EBMs for Image Inpainting \ 
+      - Train an EBM for image inpainting. \ 
+      - Mask out parts of CIFAR-10 images and use Langevin dynamics to complete them. \ 
       - Compare with GAN-based inpainting methods.
-- [ ] EBM for Multi-Modal Data Modeling\ 
-      - Train an EBM on paired datasets (e.g., text-image pairs).\ 
-      - Learn a shared energy function for joint modeling of text and images.\ 
+- [ ] EBM for Multi-Modal Data Modeling \ 
+      - Train an EBM on paired datasets (e.g., text-image pairs). \ 
+      - Learn a shared energy function for joint modeling of text and images. \ 
       - Compare with contrastive learning (e.g., CLIP).
 
 # Advanced Projects
-- [ ] 3D Shape Generation with EBMs\ 
-      - Train an EBM to generate 3D voxel representations of objects.\ 
-      - Use ShapeNet or ModelNet datasets.\ 
+- [ ] 3D Shape Generation with EBMs \ 
+      - Train an EBM to generate 3D voxel representations of objects. \ 
+      - Use ShapeNet or ModelNet datasets. \ 
       - Sample 3D objects using MCMC.
 
-- [ ] EBM for Video Prediction\ 
-      - Train an EBM to model the energy of video frames.\ 
-      - Generate future frames by minimizing energy differences.\ 
-      - Compare with RNN and transformer-based video prediction.\ 
+- [ ] EBM for Video Prediction \ 
+      - Train an EBM to model the energy of video frames. \ 
+      - Generate future frames by minimizing energy differences. \ 
+      - Compare with RNN and transformer-based video prediction. \ 
