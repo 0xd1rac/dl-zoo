@@ -6,42 +6,42 @@
       - Experiment with different energy functions. <br /> 
 - [ ] Denoising with EBMs<br /> 
       - Train an EBM for image denoising.<br /> 
-      - Add noise to MNIST/CIFAR-10 images and train the model to reconstruct the clean image. \
-      - Compare with traditional denoising autoencoders.
-- [ ] Unsupervised Representation Learning \ 
-      - Train an EBM to learn feature representations for clustering. \ 
-      - Use CIFAR-10 and analyze the learned feature space. \ 
-      - Compare with PCA and contrastive learning (SimCLR).
-- [ ] Simple Image Generation with EBMs \ 
-      - Train an EBM as a generative model on MNIST. \ 
-      - Sample new digits using Langevin sampling. \ 
-      - Compare sample quality with GANs and VAEs. 
-- [ ] EBM for Anomaly Detection \ 
-      - Train an EBM on normal samples (e.g., normal digits from MNIST).\ 
-      - Use the model’s energy function to detect anomalies (e.g., out-of-distribution images).\ 
-      - Compare with autoencoder-based anomaly detection.
+      - Add noise to MNIST/CIFAR-10 images and train the model to reconstruct the clean image. <br/> 
+      - Compare with traditional denoising autoencoders.<br/> 
+- [ ] Unsupervised Representation Learning <br/> 
+      - Train an EBM to learn feature representations for clustering. <br/> 
+      - Use CIFAR-10 and analyze the learned feature space. <br/> 
+      - Compare with PCA and contrastive learning (SimCLR).<br/> 
+- [ ] Simple Image Generation with EBMs <br/> 
+      - Train an EBM as a generative model on MNIST. <br/> 
+      - Sample new digits using Langevin sampling. <br/> 
+      - Compare sample quality with GANs and VAEs. <br/> 
+- [ ] EBM for Anomaly Detection <br/> 
+      - Train an EBM on normal samples (e.g., normal digits from MNIST).<br/> 
+      - Use the model’s energy function to detect anomalies (e.g., out-of-distribution images).<br/> 
+      - Compare with autoencoder-based anomaly detection.<br/> 
 
 # Intermediate Projects 
-- [ ] Contrastive Divergence Training on CIFAR-10      \ 
-      - Implement Contrastive Divergence (CD-k) to train an EBM on CIFAR-10. \ 
-      - Use Gibbs sampling to refine the generated images.      \ 
-      - Compare CD-1 vs. CD-10 for training stability.
-- [ ] EBMs for Image Inpainting \ 
-      - Train an EBM for image inpainting. \ 
-      - Mask out parts of CIFAR-10 images and use Langevin dynamics to complete them. \ 
-      - Compare with GAN-based inpainting methods.
-- [ ] EBM for Multi-Modal Data Modeling \ 
-      - Train an EBM on paired datasets (e.g., text-image pairs). \ 
-      - Learn a shared energy function for joint modeling of text and images. \ 
-      - Compare with contrastive learning (e.g., CLIP).
+- [ ] Contrastive Divergence Training on CIFAR-10     <br/> 
+      - Implement Contrastive Divergence (CD-k) to train an EBM on CIFAR-10. <br/> 
+      - Use Gibbs sampling to refine the generated images.      <br/> 
+      - Compare CD-1 vs. CD-10 for training stability. <br/> 
+- [ ] EBMs for Image Inpainting <br/> 
+      - Train an EBM for image inpainting. <br/> 
+      - Mask out parts of CIFAR-10 images and use Langevin dynamics to complete them. <br/> 
+      - Compare with GAN-based inpainting methods. <br/> 
+- [ ] EBM for Multi-Modal Data Modeling <br/> 
+      - Train an EBM on paired datasets (e.g., text-image pairs). <br/> 
+      - Learn a shared energy function for joint modeling of text and images. <br/> 
+      - Compare with contrastive learning (e.g., CLIP). <br/> 
 
 # Advanced Projects
-- [ ] 3D Shape Generation with EBMs \ 
-      - Train an EBM to generate 3D voxel representations of objects. \ 
-      - Use ShapeNet or ModelNet datasets. \ 
-      - Sample 3D objects using MCMC.
+- [ ] 3D Shape Generation with EBMs <br/> 
+      - Train an EBM to generate 3D voxel representations of objects. <br/> 
+      - Use ShapeNet or ModelNet datasets. <br/> 
+      - Sample 3D objects using MCMC. <br/> 
 
-- [ ] EBM for Video Prediction \ 
-      - Train an EBM to model the energy of video frames. \ 
-      - Generate future frames by minimizing energy differences. \ 
-      - Compare with RNN and transformer-based video prediction. \ 
+- [ ] EBM for Video Prediction <br/> 
+      - Train an EBM to model the energy of video frames. <br/> 
+      - Generate future frames by minimizing energy differences. <br/> 
+      - Compare with RNN and transformer-based video prediction. <br/> 
