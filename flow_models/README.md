@@ -32,6 +32,8 @@
       - Train a Glow-based model for image super-resolution.  <br/>
       - Compare performance with SRGAN and diffusion models.  <br/>
       - Use conditional flows to enhance control over outputs. <br/>
+
+# Advanced Projects
 - [ ] Flow-Based Speech Synthesis (WaveGlow) <br/>
       - Implement WaveGlow for text-to-speech (TTS). <br/>
       - Train on the LJSpeech dataset. <br/>
