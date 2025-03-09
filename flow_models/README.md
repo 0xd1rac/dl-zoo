@@ -1,8 +1,9 @@
 # Beginner Projects
-- [ ] **Normalizing Flows on 1D Gaussian Data** <br/>
-      - Implement a simple RealNVP or Planar Flow model.<br/>
-      - Train on a 1D Gaussian mixture model.<br/>
-      - Visualize how the flow transforms simple distributions into complex ones.<br/>
+- [ ] **Normalizing Flows on 1D Gaussian Data**
+  - Implement a simple RealNVP or Planar Flow model.
+  - Train on a 1D Gaussian mixture model.
+  - Visualize how the flow transforms simple distributions into complex ones.
+
 - [ ] Density Estimation with Normalizing Flows <br/>
       - Train a RealNVP model to learn the density of 2D synthetic datasets (e.g., Swiss Roll, Moons, or Circles).<br/>
       - Compare learned densities with kernel density estimation (KDE).<br/>
