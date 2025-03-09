@@ -1,4 +1,4 @@
-# EBM
+# Energy Based Models
 ## Beginner Projects
 - [ ] **Binary Classification with EBMs**
   - Train an EBM as a binary classifier on MNIST.
@@ -46,3 +46,58 @@
   - Train an EBM to generate 3D voxel representations of objects.
   - Use ShapeNet or ModelNet datasets.
   - Sample 3D objects using MCMC.
+     
+# Score Matching 
+## Beginner Projects
+- [ ] **Score Matching on 1D Gaussian Data**
+  - Implement score matching to estimate the score function of a 1D Gaussian distribution.
+  - Compare it with exact gradients of the log-density.
+  - Use denoising score matching (DSM) and visualize the estimated scores.
+
+- [ ] **Denoising Score Matching on MNIST**
+  - Train a score-based model on MNIST using denoising score matching (DSM).
+  - Corrupt images with Gaussian noise and estimate the denoised gradients.
+  - Compare with standard autoencoders.
+
+- [ ] **Score-Based Generative Model for CIFAR-10**
+  - Train a score model on CIFAR-10 using denoising score matching.
+  - Generate images via Langevin sampling.
+  - Compare with GANs and VAEs.
+
+- [ ] **Noise Conditioned Score Networks (NCSN)**
+  - Implement NCSN for learning multi-scale score functions.
+  - Train on CIFAR-10 or CelebA.
+  - Visualize learned scores at different noise levels.
+
+- [ ] **Score Matching for Anomaly Detection**
+  - Train a score model on normal images (e.g., CIFAR-10).
+  - Use the energy function from the score model to detect anomalies (e.g., out-of-distribution images).
+  - Compare with standard anomaly detection methods.
+
+## Intermediate Projects
+- [ ] **Langevin Dynamics for Image Generation**
+  - Use a pre-trained score model to generate images via Langevin dynamics.
+  - Train on MNIST or CelebA.
+  - Experiment with different noise schedules and sampling steps.
+
+- [ ] **Diffusion Models via Score Matching**
+  - Implement a diffusion probabilistic model trained using score matching.
+  - Compare training with score matching loss vs. KL-based loss.
+  - Use DDPM (Denoising Diffusion Probabilistic Models) as a baseline.
+
+- [ ] **Conditional Score-Based Generative Models**
+  - Train a conditional score model for class-conditional generation.
+  - Use classifier guidance to steer sampling toward specific image categories.
+  - Compare it with conditional GANs.
+
+## Advanced Projects
+- [ ] **3D Shape Generation with Score Matching**
+  - Train a score-based model on 3D voxelized objects (e.g., from ShapeNet).
+  - Use Langevin dynamics to generate 3D objects.
+  - Compare with GAN-based 3D generation.
+
+- [ ] **Audio Generation with Score-Based Models**
+  - Train a score-based model on waveform data for speech synthesis.
+  - Generate high-quality speech using Langevin sampling.
+  - Compare with GAN-based and diffusion-based speech models.
+
