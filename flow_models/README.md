@@ -1,4 +1,5 @@
-# Beginner Projects
+# Normalization Flow Models
+## Beginner Projects
 - [ ] **Normalizing Flows on 1D Gaussian Data**
   - Implement a simple RealNVP or Planar Flow model.
   - Train on a 1D Gaussian mixture model.
@@ -23,7 +24,7 @@
   - Use the model's likelihood estimates for out-of-distribution detection.
   - Compare with other anomaly detection methods.
 
-# Intermediate Projects
+## Intermediate Projects
 - [ ] **Glow for Image Generation**
   - Train Glow on CIFAR-10 or CelebA.
   - Experiment with temperature scaling for sampling.
@@ -39,7 +40,7 @@
   - Compare performance with SRGAN and diffusion models.
   - Use conditional flows to enhance control over outputs.
 
-# Advanced Projects
+## Advanced Projects
 - [ ] **Flow-Based Speech Synthesis (WaveGlow)**
   - Implement WaveGlow for text-to-speech (TTS).
   - Train on the LJSpeech dataset.
