@@ -4,42 +4,48 @@
   - Train on a 1D Gaussian mixture model.
   - Visualize how the flow transforms simple distributions into complex ones.
 
-- [ ] Density Estimation with Normalizing Flows <br/>
-      - Train a RealNVP model to learn the density of 2D synthetic datasets (e.g., Swiss Roll, Moons, or Circles).<br/>
-      - Compare learned densities with kernel density estimation (KDE).<br/>
-- [ ] Flow-based Image Generation (MNIST) <br/>
-      - Train RealNVP or Glow on MNIST.<br/>
-      - Sample new digits and visualize latent space interpolations.<br/>
-      - Compare results with GAN-based models.<br/>
-- [ ] Conditional Normalizing Flow for Image Generation<br/>
-      - Train a conditional RealNVP model on MNIST. <br/>
-      - Generate digits conditioned on class labels. <br/>
-      - Compare with conditional GANs. <br/>
-- [ ] Flow-based Anomaly Detection
-      - Train RealNVP on normal samples (e.g., CIFAR-10). <br/>
-      - Use the model's likelihood estimates for out-of-distribution detection. <br/>
-      - Compare with other anomaly detection methods. <br/>
-      
+- [ ] **Density Estimation with Normalizing Flows**
+  - Train a RealNVP model to learn the density of 2D synthetic datasets (e.g., Swiss Roll, Moons, or Circles).
+  - Compare learned densities with kernel density estimation (KDE).
+
+- [ ] **Flow-based Image Generation (MNIST)**
+  - Train RealNVP or Glow on MNIST.
+  - Sample new digits and visualize latent space interpolations.
+  - Compare results with GAN-based models.
+
+- [ ] **Conditional Normalizing Flow for Image Generation**
+  - Train a conditional RealNVP model on MNIST.
+  - Generate digits conditioned on class labels.
+  - Compare with conditional GANs.
+
+- [ ] **Flow-based Anomaly Detection**
+  - Train RealNVP on normal samples (e.g., CIFAR-10).
+  - Use the model's likelihood estimates for out-of-distribution detection.
+  - Compare with other anomaly detection methods.
+
 # Intermediate Projects
-- [ ] Glow for Image Generation  <br/>
-      - Train Glow on CIFAR-10 or CelebA.  <br/>
-      - Experiment with temperature scaling for sampling.  <br/>
-      - Compare with VAE and GAN-based models.  <br/>
-- [ ] Neural ODEs for Continuous Normalizing Flows  <br/>
-      - Implement Continuous Normalizing Flows (CNFs) using Neural ODEs.  <br/>
-      - Train on 2D toy datasets and visualize flow trajectories.  <br/>
-      - Compare training efficiency with discrete flow models.  <br/>
-- [ ] Invertible Flow Models for Super-Resolution  <br/>
-      - Train a Glow-based model for image super-resolution.  <br/>
-      - Compare performance with SRGAN and diffusion models.  <br/>
-      - Use conditional flows to enhance control over outputs. <br/>
+- [ ] **Glow for Image Generation**
+  - Train Glow on CIFAR-10 or CelebA.
+  - Experiment with temperature scaling for sampling.
+  - Compare with VAE and GAN-based models.
+
+- [ ] **Neural ODEs for Continuous Normalizing Flows**
+  - Implement Continuous Normalizing Flows (CNFs) using Neural ODEs.
+  - Train on 2D toy datasets and visualize flow trajectories.
+  - Compare training efficiency with discrete flow models.
+
+- [ ] **Invertible Flow Models for Super-Resolution**
+  - Train a Glow-based model for image super-resolution.
+  - Compare performance with SRGAN and diffusion models.
+  - Use conditional flows to enhance control over outputs.
 
 # Advanced Projects
-- [ ] Flow-Based Speech Synthesis (WaveGlow) <br/>
-      - Implement WaveGlow for text-to-speech (TTS). <br/>
-      - Train on the LJSpeech dataset. <br/>
-      - Compare performance with WaveNet and diffusion-based speech models. <br/>
-- [ ] Flow-based Molecular Generation <br/>
-      - Train a Graph Normalizing Flow (GraphNVP) for molecule generation. <br/>
-      - Use the ZINC molecular dataset. <br/>
-      - Compare with GAN and diffusion-based molecular models.<br/>
+- [ ] **Flow-Based Speech Synthesis (WaveGlow)**
+  - Implement WaveGlow for text-to-speech (TTS).
+  - Train on the LJSpeech dataset.
+  - Compare performance with WaveNet and diffusion-based speech models.
+
+- [ ] **Flow-based Molecular Generation**
+  - Train a Graph Normalizing Flow (GraphNVP) for molecule generation.
+  - Use the ZINC molecular dataset.
+  - Compare with GAN and diffusion-based molecular models.
