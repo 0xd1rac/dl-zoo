@@ -39,7 +39,7 @@
   - Use the CUB-200 or MS-COCO dataset.
   - Train a StackGAN or AttnGAN and compare the results.
 
-# Advanced Projects
+## Advanced Projects
 - [ ] **3D Object Generation with GANs**
   - Train a 3D GAN (e.g., GANformer-3D) to generate 3D models.
   - Use datasets like ShapeNet or ModelNet.
