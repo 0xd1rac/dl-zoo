@@ -1,5 +1,5 @@
 # Beginner Projects
-- [ ] Normalizing Flows on 1D Gaussian Data <br/>
+- [ ] **Normalizing Flows on 1D Gaussian Data** <br/>
       - Implement a simple RealNVP or Planar Flow model.<br/>
       - Train on a 1D Gaussian mixture model.<br/>
       - Visualize how the flow transforms simple distributions into complex ones.<br/>
