@@ -2,3 +2,4 @@ venv
 run.py
 cv_imp/__pycache__/*
 *pycache*
+data/
