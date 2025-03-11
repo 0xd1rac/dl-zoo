@@ -1,4 +1,4 @@
-from gans.models.dcgans import Generator, Discriminator, weights_init
+from gans.dcgans import Generator, Discriminator, weights_init
 import torch 
 import torch.nn as nn 
 import torch.optim as optim

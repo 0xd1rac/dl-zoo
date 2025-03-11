@@ -5,8 +5,7 @@ import torch.optim as optim
 from torch import Tensor
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
-import math
-from diffusion.models.ddpm import Unet, LinearNoiseScheduler
+from diffusion.ddpm import Unet, LinearNoiseScheduler
 from utils.datamanger import DataManager
 
 if __name__ == "__main__":
