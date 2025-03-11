@@ -3,32 +3,43 @@ import torch.nn as nn
 from torch import Tensor
 
 class LinearNoiseScheduler:
-    def __init__(self, 
-                 num_timesteps:int,
-                 beta_start:float,
-                 beta_end:float):
+    def __init__(self, num_timesteps: int, beta_start: float, beta_end: float):
+        """
+        Linear noise scheduler that computes beta values linearly from beta_start to beta_end.
+        Pre-computes alpha cumulative products and their square roots.
+        """
         self.num_timesteps = num_timesteps
         self.beta_start = beta_start
         self.beta_end = beta_end
         self.betas = torch.linspace(beta_start, beta_end, num_timesteps)
         self.alphas = 1 - self.betas
         self.alpha_cum_prod = torch.cumprod(self.alphas, dim=0)
-        self.sqrt_alpha_cum_prod = torch.sqrt(self.sqrt_alpha_cum_prod)
-        self.sqrt_one_minus_alpha_cum_prod = torch.sqrt(1 - self.sqrt_alpha_cum_prod)
+        # Compute square roots of cumulative products
+        self.sqrt_alpha_cum_prod = torch.sqrt(self.alpha_cum_prod)
+        self.sqrt_one_minus_alpha_cum_prod = torch.sqrt(1 - self.alpha_cum_prod)
 
-    def add_noise(self, original, noise, t):
+    def add_noise(self, original: Tensor, noise: Tensor, t: Tensor) -> Tensor:
+        """
+        Adds noise to the original images based on the timestep t.
+        
+        :param original: Original images tensor of shape [B, C, H, W]
+        :param noise: Noise tensor of the same shape as original.
+        :param t: Tensor of time steps of shape [B] (each value between 0 and num_timesteps-1).
+        :return: Noisy images tensor.
+        """
         original_shape = original.shape
         batch_size = original_shape[0]
 
+        # Select the precomputed factors for each sample based on t.
         sqrt_alpha_cum_prod = self.sqrt_alpha_cum_prod[t].reshape(batch_size)
         sqrt_one_minus_alpha_cum_prod = self.sqrt_one_minus_alpha_cum_prod[t].reshape(batch_size)
 
+        # Unsqueeze to allow broadcasting to the image shape.
         for _ in range(len(original_shape) - 1):
             sqrt_alpha_cum_prod = sqrt_alpha_cum_prod.unsqueeze(-1)
             sqrt_one_minus_alpha_cum_prod = sqrt_one_minus_alpha_cum_prod.unsqueeze(-1)
 
         return sqrt_alpha_cum_prod * original + sqrt_one_minus_alpha_cum_prod * noise
-
 
     def sample_prev_timestep(self, xt, noise_pred, t):
         # Compute the original image from noisy input xt
@@ -46,9 +57,6 @@ class LinearNoiseScheduler:
             z = torch.randn(xt.shape).to(xt.device)
             return mean + sigma * z, x0
 
-import torch
-import torch.nn as nn
-from torch import Tensor
 
 class TimeEmbedding(nn.Module):
     """
