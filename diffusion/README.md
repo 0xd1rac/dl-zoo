@@ -1,5 +1,5 @@
 ## DDPM
-Training algorithm;
+**Training algorithm**
 1. Sample an image, $x_0$ from dataset
 2. Sample a time step, t randomly from [0,T]
 3. Sample noise, $\epsilon$ from $N(O,I)$
@@ -9,6 +9,12 @@ Training algorithm;
    $$L(\theta) = ||\epsilon - \hat{\epsilon}||^2$$
 7. Backprop
 
+**Image Generation Algorithm**
+1. Sample noise image, $x_T$ from $N(0,I)$
+2. Perform iterative denoising/reverse diffusion
+     - for t in T -> 1:
+          - sample noise, $z$ from $N(0,I)$ if t > 1, else $z = 0$
+          - 
 
 # Diffusion Models
 ## Beginner Projects
