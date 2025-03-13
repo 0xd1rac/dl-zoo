@@ -4,7 +4,9 @@ Training algorithm;
 2. Sample a time step, t randomly from [0,T]
 3. Sample noise, $\epsilon$ from $N(O,I)$
 4. Add sampled noise the image using the precomputed forward diffusion formula: $x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t} \epsilon$ where $\bar{\alpha}$ is a known constant derived from the diffusion noise schedule $\beta_t$
-5. Use a neural network, $net_{\theta}(x_t,t)$ to predict the added noise, \hat{\epsilon_} 
+5. Use a neural network, $net_{\theta}(x_t,t)$ to predict the added noise, $\hat{\epsilon}$
+6. Compute loss between the actual sampled noise, $\epsilon$ and predicted noise $\hat{\epsilon}$.
+   $$ L(\theta) = ||\epsilon - \hat{\epsilon}||^2 $$
 
 
 # Diffusion Models
