@@ -1,6 +1,6 @@
 import torch 
 import torch.nn as nn
-import clip
+import vlm.clip as clip
 
 # Convert an image into patches using nn.Conv2d
 class PatchEmbedding(nn.Module):
