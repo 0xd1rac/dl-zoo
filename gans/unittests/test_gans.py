@@ -29,7 +29,7 @@ class TestGANs(unittest.TestCase):
         preds = self.d(self.dummy_img)
         
         # Expected output shape: [batch_size, 1]
-        target_shape = torch.Size([self.batch_size, 1])
+        target_shape = torch.Size([self.batch_size])
 
         self.assertEqual(preds.shape, target_shape, "Discriminator output shape is wrong!!")
 
