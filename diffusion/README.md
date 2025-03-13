@@ -7,6 +7,7 @@ Training algorithm;
 5. Use a neural network, $net_{\theta}(x_t,t)$ to predict the added noise, $\hat{\epsilon}$
 6. Compute loss between the actual sampled noise, $\epsilon$ and predicted noise $\hat{\epsilon}$.
    $$L(\theta) = ||\epsilon - \hat{\epsilon}||^2$$
+7. Backprop
 
 
 # Diffusion Models
