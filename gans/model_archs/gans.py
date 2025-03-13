@@ -45,7 +45,7 @@ class Discriminator(nn.Module):
     def forward(self, img):
         img_flat = img.view(img.size(0), -1)
         validity = self.model(img_flat)
-        return validity
+        return validity.view(-1)
 
 def weights_init_normal(m):
     classname = m.__class__.__name__
