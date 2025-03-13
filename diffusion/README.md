@@ -18,7 +18,7 @@
           - Using the trained model predict noise: $\hat{\epsilon} = net_{\theta}(x_t, t)$
           - Update noisy sample $x_t$ to $x_{t-1}$ using the closed form equation:
 
-            $$x_{t-1} = \frac{1}{\sqrt{\alpha_t}} (x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha_t}}}) $$
+            $$x_{t-1} = \frac{1}{\sqrt{\alpha_t}} (x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha_t}}} * \hat{\epsilon}) + \sigma_t z $$
 
 # Diffusion Models
 ## Beginner Projects
