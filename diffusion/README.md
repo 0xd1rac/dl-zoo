@@ -1,3 +1,10 @@
+## DDPM
+Training algorithm;
+1. Sample an image, $x_0$ from dataset
+2. Sample a time step, t randomly from [0,T]
+3. Sample noise, $\epsilon$
+
+
 # Diffusion Models
 ## Beginner Projects
 - [ ] **Denoising Diffusion Model on MNIST**
