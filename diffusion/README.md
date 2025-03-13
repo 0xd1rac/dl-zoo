@@ -3,7 +3,7 @@ Training algorithm;
 1. Sample an image, $x_0$ from dataset
 2. Sample a time step, t randomly from [0,T]
 3. Sample noise, $\epsilon$ from $N(O,I)$
-4. Add sampled noise the image using the precomputed forward diffusion formula: $x_t = \sqrt(\hat{\alpha}_t)
+4. Add sampled noise the image using the precomputed forward diffusion formula: $x_t = \sqrt(\hat{\alpha}_t)$
 
 
 # Diffusion Models
