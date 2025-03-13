@@ -8,6 +8,21 @@ from torch.utils.data import DataLoader
 from diffusion.ddpm import Unet, LinearNoiseScheduler
 from utils.datamanger import DataManager
 
+def sample_ddpm(trained_model, shape, num_timesteps, noise_scheduler, device):
+    x = torch.randn(shape, device=device)
+
+    for t in reversed(range(num_timesteps)):
+        # Create a tensor of the current time step for the entire batch
+        t = torch.full((shape[0],), t, device=device, dtype=torch.long)
+
+        # Predict the noise using the trained model
+        predicted_noise = trained_model(x, t)
+
+        x, x0 = noise_scheduler.sample_prev_timestep(x, predicted_noise, t)
+
+    return x,x0
+        
+
 if __name__ == "__main__":
     # Hyperparameters
     epochs = 20
@@ -72,7 +87,3 @@ if __name__ == "__main__":
         if epoch % 5 == 0:
             # Save the model checkpoint after 5 epoch.
             torch.save(model.state_dict(), f"ddpm_mnist_epoch{epoch+1}.pth")
-
-
-
-
