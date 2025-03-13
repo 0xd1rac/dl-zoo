@@ -49,7 +49,8 @@ class LinearNoiseScheduler:
         mean = xt - ((self.betas[t] * noise_pred) / (self.sqrt_one_minus_alpha_cum_prod[t]))
         mean = mean / torch.sqrt(self.alphas[t])
 
-        if t == 0: return mean, x0
+        if t == 0: 
+            return mean, x0
         else:
             variance = (1 - self.alpha_cum_prod[t-1]) / (1. - self.alpha_cum_prod[t])
             variance = variance * self.betas[t]
@@ -532,6 +533,5 @@ class Unet(nn.Module):
         out = nn.SiLU()(out)
         out = self.conv_out(out)
         return out
-
 
 
