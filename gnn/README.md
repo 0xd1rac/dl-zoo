@@ -32,6 +32,7 @@ Is $v$ part of $N(v)$ : for this paper, yes since there are self loops, $\tilde{
 
 ### The Graph Laplacian 
 A graph Laplacian, $L$ is a a matrix that helps us analyze graph structures. The Laplacian matrix is useful because its eigenvalues and eigenvectors provide important structural information about the graph. There are different forms of Laplacians, but in this paper the normalized graph Laplacian is used:
+
 $$
 L = I_N - D^{-\frac{1}{2}}AD^{-\frac{1}{2}}
 $$
