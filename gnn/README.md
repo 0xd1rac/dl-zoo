@@ -217,3 +217,6 @@ where:
 - **$\psi \in \mathbb{R}^{F}$**: A **learnable attention vector**, where $F$ is the feature dimension.
 - **$||$**: Denotes **concatenation** of the feature vectors.
 - **$\text{LeakyReLU}(x)$**: The **Leaky ReLU activation function**, applied to introduce non-linearity.
+
+### Steps of Graph Attention Layer
+Input: A set of node features, $h = {\bar{h}_1,\bar{h}_2, \bar{h}_2, ..., \bar{h}_n }$
