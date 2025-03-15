@@ -26,9 +26,9 @@ $$
 
 where: 
 
-- $h_v^{(l)}$ is the node feature representation of node $v$ at layer $$ l $$.
-- $N(v)$ represents the **neighbors** of node $ v $.
-- $W^{(l)}$ is the trainable weight matrix at layer $ l $.
+- $h_v^{(l)}$ is the node feature representation of node $v$ at layer $l$.
+- $N(v)$ represents the **neighbors** of node $v$.
+- $W^{(l)}$ is the trainable weight matrix at layer $l$.
 - $\frac{1}{\sqrt{|N(u)| |N(v)|}}$ is a **normalization term** that accounts for the degree of nodes.
 - $h_u^{(l-1)}$ represents the feature vector of neighboring node $ u $ from the previous layer $l - 1$.
 - $\sigma(\cdot)$ is a **non-linear activation function** (e.g., ReLU).
