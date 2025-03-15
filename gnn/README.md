@@ -30,7 +30,7 @@ where:
 - $N(v)$ represents the **neighbors** of node $v$.
 - $W^{(l)}$ is the trainable weight matrix at layer $l$.
 - $\frac{1}{\sqrt{|N(u)| |N(v)|}}$ is a **normalization term** that accounts for the degree of nodes.
-- $h_u^{(l-1)}$ represents the feature vector of neighboring node $ u $ from the previous layer $l - 1$.
+- $h_u^{(l-1)}$ represents the feature vector of neighboring node $u$ from the previous layer $l - 1$.
 - $\sigma(\cdot)$ is a **non-linear activation function** (e.g., ReLU).
 
 Is $v$ part of $N(v)$ : for this paper, yes since there are self loops, $\tilde{A} = A + I$
