@@ -82,13 +82,16 @@ $$
 where:
 - $\tilde{\Lambda} = \frac{2}{\lambda_{max}}\Lambda - I_{N}$ is rescaled version of $\Lambda$
 - $\theta_{k}'$ are Cheybyshev coefficients, which are parameters that we learn.
-- The  Chebyshev polynomials are defined recursively as: 
+- The  Chebyshev polynomials are defined recursively as:
+  
 $$
 T_k(x)=2xT_{k-1}(x) - T_{k-2}(x)
 $$
+
 where $T_0(x) = 1$ and $T_1(x) = x$
 
 Since $\tilde{\Lambda}$ is defined via $\tilde{L}$, the convolution operation follows:
+
 $$
 g_{\theta'}  * x \approx \Sigma_{k=0}^{K}\theta_{k}'T_{k}(\tilde{L})x
 $$
@@ -117,19 +120,23 @@ g_{\theta'} * x \approx \theta_{0}'x + \theta_{1}'(L-I_N)x
 $$
 
 Expanding $L = I_N - D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$, we get:
+
 $$
 g_{\theta'} * x = \theta_{0}'x - \theta_{1}'D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x
 $$
 
 Instead of two parameters $\theta_{0}'$ and $\theta_{1}'$, we merge them into a single parameter $\theta$. 
+
 $$
 g_{\theta'} * x \approx \theta(I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x
 $$
 
 The issue now is that $I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$ can lead to exploding or vanishing gradients when stacking multiple layers (some eigenvalue reason). To fix this we apply the renormalization trick: 
+
 $$
 I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}} \rarr \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}
 $$
+
 $$
 g_{\theta'} * x \approx \theta( \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}})x
 $$
