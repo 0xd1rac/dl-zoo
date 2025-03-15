@@ -167,7 +167,7 @@ $$
 where:
 - $\tilde{A} = A + I_N$ is the adjacency matrix of the undirected graph $\mathcal{G}$ with added self-connections.
 - $I_N$ is the identity matrix.
-- $\tilde{D_{ii}} = \sum_j \tilde{A}_{ij}$ is the degree matrix corresponding to $ \tilde{A} $.
+- $\tilde{D_{ii}} = \sum_j \tilde{A}_{ij}$ is the degree matrix corresponding to $\tilde{A}$.
 - $W^{(l)}$ is a layer-specific trainable weight matrix.
-- $\sigma(\cdot)$ denotes an activation function, such as ReLU: $ \text{ReLU}(x) = \max(0, x) $.
-- $H^{(0)} = X$ is the input feature matrix of shape $ \mathbb{R}^{N \times D} $.
+- $\sigma(\cdot)$ denotes an activation function, such as ReLU: $\text{ReLU}(x) = \max(0, x)$.
+- $H^{(0)} = X$ is the input feature matrix of shape $\mathbb{R}^{N \times D}$.
