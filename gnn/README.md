@@ -219,4 +219,5 @@ where:
 - **$\text{LeakyReLU}(x)$**: The **Leaky ReLU activation function**, applied to introduce non-linearity.
 
 ### Steps of Graph Attention Layer
-Input: A set of node features, $h = {\bar{h}_1,\bar{h}_2, \bar{h}_2, ..., \bar{h}_n }$
+Input: A set of node features, $h = [\bar{h}_1,\bar{h}_2, \bar{h}_2, ..., \bar{h}_n ]$
+where $\bar{h}_{i} \in \mathbb{R}^{F}$
