@@ -177,3 +177,43 @@ where:
 - $W^{(l)}$ is a layer-specific trainable weight matrix.
 - $\sigma(\cdot)$ denotes an activation function, such as ReLU: $\text{ReLU}(x) = \max(0, x)$.
 - $H^{(0)} = X$ is the input feature matrix of shape $\mathbb{R}^{N \times D}$.
+---
+## Graph Attention Networks
+### Message and Aggregation View 
+
+The general paradigm of Graph Neura Layers have been 
+1. Message
+2. Aggregate
+
+Mathematically we define this as:
+
+$$
+h_{v}^{l} = \sigma(\Sigma_{u \in N(v)} \alpha_{u,v}^{l} W^{l}  h_{u}^{l-1})
+$$
+
+where for GCNS:
+
+$$
+\alpha_{u,v}^{l} = \frac{1}{\sqrt{|N(u)||N(v)|}}
+$$
+
+
+For GATs:
+
+$$
+\alpha_{u,v}^{l} = Softmax(a(h^{l}_{u},h^{l}_{v}))
+$$
+
+
+$$
+a(h^{l}_{u},h^{l}_{v}) = LeakyReLU(\psi^{T} * [W'{l}h_{u}^{l-1}||W^{l}h^{l-1}_{v}])
+$$
+
+where:
+- **$h_u^{l}$, $h_v^{l}$**: The **feature representations** of nodes $u$ and $v$ at layer $l$.
+- **$W^l$**: The **learnable weight matrix** at layer $l$, which projects node features to a new space.
+- **$\alpha_{u,v}^{l}$**: The **attention coefficient** that determines how much node $v$ attends to node $u$.
+- **$a(h_u^{l}, h_v^{l})$**: The **attention score function** that computes unnormalized attention scores between nodes $u$ and $v$.
+- **$\psi \in \mathbb{R}^{F}$**: A **learnable attention vector**, where $F$ is the feature dimension.
+- **$||$**: Denotes **concatenation** of the feature vectors.
+- **$\text{LeakyReLU}(x)$**: The **Leaky ReLU activation function**, applied to introduce non-linearity.
