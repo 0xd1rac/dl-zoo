@@ -134,7 +134,7 @@ $$
 The issue now is that $I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$ can lead to exploding or vanishing gradients when stacking multiple layers (some eigenvalue reason). To fix this we apply the renormalization trick: 
 
 $$
-I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}} \rarr \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}
+I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}}  \rightarrow \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}
 $$
 
 $$
@@ -150,7 +150,7 @@ This modification ensures that
 - Each node includes its own features in addition to its neigbors
 
 ### Extending to mult-feature graphs 
-So far, we've considered a single feature per node. But real-world graphs (e.g., social networks, molecular graphs) often have multiple features per node. To generalize to multiple input channels, we represent the node features as a matrix $X \in \R^{N \times C}$ (feature matrix of all the nodes) where 
+So far, we've considered a single feature per node. But real-world graphs (e.g., social networks, molecular graphs) often have multiple features per node. To generalize to multiple input channels, we represent the node features as a matrix $X \in \mathbb{R}^{N \times C}$ (feature matrix of all the nodes) where 
 - $N$ is the number of nodes in the graph 
 - $C$ is the number of input features per node. 
 
