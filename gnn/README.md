@@ -14,6 +14,12 @@ of a special matrix called the graph Laplacian.
 
 
 ### Message and Aggregate View
+
+<p align="center">
+  <img src="images/gcn_msg_aggregate.jpeg" alt="GCN Architecture"  />
+</p>
+
+
 $$
 h_{v}^{(l)} = \sigma(\Sigma_{u \in N(v)}W^{(l)}\frac{1}{\sqrt{|N(u)||N(v)|}}h_{u}^{l-1})
 $$
