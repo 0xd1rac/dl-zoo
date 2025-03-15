@@ -43,6 +43,7 @@ where
 - $A$ is the adjacency matrix 
 
 The graph Fourier transform is the process of transforming a signal on the graph into the spectral domain using the eigenvectors of $L$. the eigendecomposition of L is:
+
 $$
 L = U \Lambda U^{T}
 $$
@@ -53,6 +54,7 @@ where
 
 ### Spectral Graph Convolution Defn:
 We can define spectral convolutions as the multiplication of a signal $x$ by a filter function $g{\theta}$ in the Fourier domain. 
+
 $$
     g_{\theta} * x = Ug_{\theta}U^Tx
 $$
