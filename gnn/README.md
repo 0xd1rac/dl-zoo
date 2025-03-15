@@ -22,10 +22,10 @@ where:
 
 - $h_v^{(l)}$ is the node feature representation of node $v$ at layer $$ l $$.
 - $N(v)$ represents the **neighbors** of node $ v $.
-- $ W^{(l)} $ is the trainable weight matrix at layer $ l $.
-- $ \frac{1}{\sqrt{|N(u)| |N(v)|}} $ is a **normalization term** that accounts for the degree of nodes.
-- $ h_u^{(l-1)} $ represents the feature vector of neighboring node $ u $ from the previous layer $l - 1$.
-- $ \sigma(\cdot) $ is a **non-linear activation function** (e.g., ReLU).
+- $W^{(l)}$ is the trainable weight matrix at layer $ l $.
+- $\frac{1}{\sqrt{|N(u)| |N(v)|}}$ is a **normalization term** that accounts for the degree of nodes.
+- $h_u^{(l-1)}$ represents the feature vector of neighboring node $ u $ from the previous layer $l - 1$.
+- $\sigma(\cdot)$ is a **non-linear activation function** (e.g., ReLU).
 
 Is $v$ part of $N(v)$ : for this paper, yes since there are self loops, $\tilde{A} = A + I$
 
@@ -56,7 +56,7 @@ where
 We can define spectral convolutions as the multiplication of a signal $x$ by a filter function $g{\theta}$ in the Fourier domain. 
 
 $$
-    g_{\theta} * x = Ug_{\theta}U^Tx
+g_{\theta} * x = Ug_{\theta}U^Tx
 $$
 
 where 
@@ -146,7 +146,7 @@ where
 - $\tilde{D_{ii}} = \Sigma_j{\tilde{A}_{ij}}$ (degree matrix for $\tilde{A}$ )
 
 This modification ensures that 
-- The eigenvalues remain bounded between [0,2] preventing instability
+- The eigenvalues remain bounded between $[0,2]$ preventing instability
 - Each node includes its own features in addition to its neigbors
 
 ### Extending to mult-feature graphs 
@@ -166,8 +166,8 @@ $$
 
 where:
 - $\tilde{A} = A + I_N$ is the adjacency matrix of the undirected graph $\mathcal{G}$ with added self-connections.
-- $ I_N $ is the identity matrix.
-- $ \tilde{D}_{ii} = \sum_j \tilde{A}_{ij} $ is the degree matrix corresponding to $ \tilde{A} $.
-- $ W^{(l)} $ is a layer-specific trainable weight matrix.
-- $ \sigma(\cdot) $ denotes an activation function, such as ReLU: $ \text{ReLU}(x) = \max(0, x) $.
-- $ H^{(0)} = X $ is the input feature matrix of shape $ \mathbb{R}^{N \times D} $.
+- $I_N$ is the identity matrix.
+- $\tilde{D}_{ii} = \sum_j \tilde{A}_{ij}$ is the degree matrix corresponding to $ \tilde{A} $.
+- $W^{(l)}$ is a layer-specific trainable weight matrix.
+- $\sigma(\cdot)$ denotes an activation function, such as ReLU: $ \text{ReLU}(x) = \max(0, x) $.
+- $H^{(0)} = X$ is the input feature matrix of shape $ \mathbb{R}^{N \times D} $.
