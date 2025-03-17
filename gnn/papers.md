@@ -1,0 +1,34 @@
+- [x] GCN
+- [ ] GAT
+- [ ] GraphSage
+- [ ] DeepWalk
+- [ ] Node2Vec
+- [ ] GIN
+- [ ] Variational Graph Auto-Encoder
+- [ ] Graph Autoencoder
+- [ ] Fast-GCN
+- [ ] Stochastic GCN
+- [ ] GraphSAINT
+- [ ] Learning Social Graph Topologies using Generative Adverserial Networks 
+- [ ] NetGAN: Generating Graphs using Random Walks 
+- [ ] Principal Neighborhood Aggregation
+- [ ] Recurrent Graph Neural Network 
+- [ ] Graph Pooling: DIFFPOOL
+- [ ] Metapath2Vec
+- [ ] Gated Graph Neural Network 
+- [ ] Gated Graph Sequence Neural Network 
+- [ ] MinSage
+- [ ] Temporal Graph Networks
+- [ ] Hyperbolic Graph Convolutional Networks
+- [ ] Adverserially Reguarlized Graph Autoencoder
+- [ ] Adverserially Reguarlized Graph Variational Autoencoder
+- [ ] Relational GCN
+- [ ] TransE
+- [ ] TransR
+- [ ] ComplexEx
+- [ ] DistMul
+- [ ] Query2Box
+- [ ] Neural Subgraph Matching
+- [ ] Representation Learning for Frequent Subgraph Mining
+- [ ] SPMiner 
+- [ ] SIGN: Scalable Inception Graph Neural Networks
