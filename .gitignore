@@ -3,3 +3,4 @@ run.py
 cv_imp/__pycache__/*
 *pycache*
 data/
+*DS_STORE
