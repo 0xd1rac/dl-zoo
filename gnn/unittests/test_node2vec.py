@@ -2,7 +2,7 @@ import unittest
 import random
 import numpy as np
 from gensim.models import Word2Vec
-from model_archs.node2vec import *
+from gnn.layer_archs.node2vec import *
 
 random.seed(42)
 np.random.seed(42)
