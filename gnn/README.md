@@ -248,7 +248,7 @@ where:
 - A: Adjacency matrix
 - Initial embeddings: $F^{(0)} (node features handcrafted or randomly initialized)
 
-General Form of DiffPool
+**General Form of DIFFPOOL**
 1. Node embeddings computed via a GNN layer:
 
 $$
@@ -264,13 +264,16 @@ $$
 3. Graph coarsening/pooling step:
 
 $$
-H_{pooled}^{l} = (S^{(l)})^{(T)}H^{(l)}
+H_{pooled}^{l} = (S^{(l)})^{(T)}F^{(l)}
 $$
 
 
 $$
-A_{pooled}^{l} = (S^{(l)})^{(T)}A^{(l)}
+A_{pooled}^{l} = (S^{(l)})^{(T)}A^{(l)}S^{(l)}
 $$
 
+Examples:
+1. DIFFPOOL with GCN
+   1. $F^{(l)} = ReLU(\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}F^{(l-1)}W^{(l)})$
 
 
