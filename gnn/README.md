@@ -236,16 +236,17 @@ GNNS operate using a message-passing framework to learn node representations. Ea
 can be represented as:
 
 $$
-F^{(l)} = M (A, F^{(l-1}; \theta^{(l)})
+F^{(l)} = GNN(A, F^{(l-1}; W^{(l)})M (A, F^{(l-1};  W^{(l)})
 $$
 
 where:
 - $F^{(l)} \in \mathbb{R}^{n \times d}$: Node embeddings at layer l.
 - M(\dot): Message propagation function:
     - Aggregates information from neighbors
-    - Uses trainable parameters, $\theta^{(l}$
-- $F^{(l-1}$: Node embeddings at layer l-1
+    - Uses trainable parameters, $W^{(l)}$
+- $F^{(l-1}$: Node embeddings at layer $l-1$
 - A: Adjacency matrix
-- Initializ embeddings $F^{0} = F (node features or randomly initialized)$
+- Initial embeddings $F^{0} = F$ (node features handcrafted or randomly initialized)
 
 
+General
