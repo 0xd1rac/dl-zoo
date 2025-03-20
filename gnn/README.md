@@ -218,6 +218,7 @@ where:
 - **$||$**: Denotes **concatenation** of the feature vectors.
 - **$\text{LeakyReLU}(x)$**: The **Leaky ReLU activation function**, applied to introduce non-linearity.
 
+<<<<<<< HEAD
 
 ## Node2Vec
 In node2vec, each node in the network is assigned a vector—a set of continuous, low-dimensional numbers—that captures its characteristics based on its local and global network structure. 
@@ -246,13 +247,5 @@ DIFFPOOL (Differentiable Pooling) is a hierarchical graph neural network (GNN) m
 ### DiffPoolNet
 
 
-
-
-
-
 ---
-
-## GraphSAGE
-Videos:
-https://www.youtube.com/watch?v=3AzphNf5ja8
 
