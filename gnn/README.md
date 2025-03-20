@@ -224,7 +224,7 @@ where $\bar{h}_{i} \in \mathbb{R}^{F}$
 
 
 
-## GraphSAGE
+## DIFFPOOL
 ### The Limitations of Standard GNNs
 A graph $G$ is represented as (A,F) where: 
 - $A \in [0,1]^{n \times n}$ is the adjacency matrix
@@ -236,17 +236,41 @@ GNNS operate using a message-passing framework to learn node representations. Ea
 can be represented as:
 
 $$
-F^{(l)} = GNN(A, F^{(l-1}; W^{(l)})M (A, F^{(l-1};  W^{(l)})
+F^{(l)} = GNN(A, F^{(l-1}; W^{(l)}
 $$
 
 where:
 - $F^{(l)} \in \mathbb{R}^{n \times d}$: Node embeddings at layer l.
-- M(\dot): Message propagation function:
+- GNN(A, F^{(l-1}; W^{(l)}): GNN Layer (GCN, GAT, GraphSAGE, etc.):
     - Aggregates information from neighbors
     - Uses trainable parameters, $W^{(l)}$
-- $F^{(l-1}$: Node embeddings at layer $l-1$
+- $F^{(l-1)}$: Node embeddings at layer $l-1$
 - A: Adjacency matrix
-- Initial embeddings $F^{0} = F$ (node features handcrafted or randomly initialized)
+- Initial embeddings: $F^{(0)} (node features handcrafted or randomly initialized)
+
+General Form of DiffPool
+1. Node embeddings computed via a GNN layer:
+
+$$
+F^{(l)} = GNN_{embed}(A, F^{(l-1}; W^{(l_{embed})}
+$$
+
+2. Soft cluster assignments computer using another GNN layer:
+
+$$
+S^{(l)} = softmax(GNN_{cluster}(A, F^{(l-1}; W^{(l_{S})}
+$$
+
+3. Graph coarsening/pooling step:
+
+$$
+H_{pooled}^{l} = (S^{(l)})^{(T)}H^{(l)}
+$$
 
 
-General
+$$
+A_{pooled}^{l} = (S^{(l)})^{(T)}A^{(l)}
+$$
+
+
+
