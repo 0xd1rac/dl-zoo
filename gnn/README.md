@@ -241,7 +241,7 @@ $$
 
 where:
 - $F^{(l)} \in \mathbb{R}^{n \times d}$: Node embeddings at layer l.
-- GNN(A, F^{(l-1}; W^{(l)}): GNN Layer (GCN, GAT, GraphSAGE, etc.):
+- $GNN(A, F^{(l-1}; W^{(l)})$: GNN Layer (GCN, GAT, GraphSAGE, etc.):
     - Aggregates information from neighbors
     - Uses trainable parameters, $W^{(l)}$
 - $F^{(l-1)}$: Node embeddings at layer $l-1$
@@ -252,13 +252,13 @@ where:
 1. Node embeddings computed via a GNN layer:
 
 $$
-F^{(l)} = GNN_{embed}(A, F^{(l-1}; W^{(l_{embed})}
+F^{(l)} = GNN_{embed}(A, F^{(l-1}; W^{(l)}_{embed}
 $$
 
 2. Soft cluster assignments computer using another GNN layer:
 
 $$
-S^{(l)} = softmax(GNN_{cluster}(A, F^{(l-1}; W^{(l_{S})}
+S^{(l)} = softmax(GNN_{cluster}(A, F^{(l-1}; W^{(l)}_{S}}
 $$
 
 3. Graph coarsening/pooling step:
@@ -274,6 +274,7 @@ $$
 
 Examples:
 1. DIFFPOOL with GCN
-   1. $F^{(l)} = ReLU(\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}F^{(l-1)}W^{(l)})$
+   1. $F^{(l)} = ReLU(\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}F^{(l-1)}W^{(l)}_embed)$
+   2. $S^{(l)} = softmax()$
 
 
