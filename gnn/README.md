@@ -258,18 +258,18 @@ $$
 2. Soft cluster assignments computer using another GNN layer:
 
 $$
-S^{(l)} = softmax(GNN_{cluster}(A, F^{(l-1}; W^{(l)}_{S}}
+S^{(l)} = softmax(GNN_{S}(A, F^{(l)}; W^{(l)}_{S}
 $$
 
 3. Graph coarsening/pooling step:
 
 $$
-H_{pooled}^{l} = (S^{(l)})^{(T)}F^{(l)}
+F_{pooled}^{(l)} = (S^{(l)})^{(T)}F^{(l)}
 $$
 
 
 $$
-A_{pooled}^{l} = (S^{(l)})^{(T)}A^{(l)}S^{(l)}
+A_{pooled}^{(l)} = (S^{(l)})^{(T)}A^{(l)}S^{(l)}
 $$
 
 Examples:
