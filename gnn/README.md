@@ -226,5 +226,5 @@ where $\bar{h}_{i} \in \mathbb{R}^{F}$
 
 ## GraphSAGE
 A graph $G$ is represented as (A,F) where: 
-- $A \in {0,1}^{n \times n} is the adjacency matrix
+- $A \in {0,1}^{n \times n}$ is the adjacency matrix
 - 
