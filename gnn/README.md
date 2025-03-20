@@ -221,3 +221,10 @@ where:
 ### Steps of Graph Attention Layer
 Input: A set of node features, $h = [\bar{h}_1,\bar{h}_2, \bar{h}_2, ..., \bar{h}_n ]$
 where $\bar{h}_{i} \in \mathbb{R}^{F}$
+
+
+
+## GraphSAGE
+A graph $G$ is represented as (A,F) where: 
+- $A \in {0,1}^{n \times n} is the adjacency matrix
+- 
