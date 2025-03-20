@@ -225,6 +225,19 @@ where $\bar{h}_{i} \in \mathbb{R}^{F}$
 
 
 ## GraphSAGE
+### The Limitations of Standard GNNs
 A graph $G$ is represented as (A,F) where: 
-- $A \in {0,1}^{n \times n}$ is the adjacency matrix
-- 
+- $A \in [0,1]^{n \times n}$ is the adjacency matrix
+- $F \in \mathbb{R}^{n \times d}$ is the node feature matrix:
+    - n: number of nodes in the graph
+    - d: feature vector dim
+
+GNNS operate using a message-passing framework to learn node representations. Each node updates its representation iteratively using information from its neighbors. Mathetmatically, this message-passing framework
+can be represented as:
+
+$$
+F^{(l)} = M (A, F^{(l-1}; \theta^{k}
+$$
+
+
+
