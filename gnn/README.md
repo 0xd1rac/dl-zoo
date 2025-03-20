@@ -217,3 +217,42 @@ where:
 - **$\psi \in \mathbb{R}^{F}$**: A **learnable attention vector**, where $F$ is the feature dimension.
 - **$||$**: Denotes **concatenation** of the feature vectors.
 - **$\text{LeakyReLU}(x)$**: The **Leaky ReLU activation function**, applied to introduce non-linearity.
+
+
+## Node2Vec
+In node2vec, each node in the network is assigned a vector—a set of continuous, low-dimensional numbers—that captures its characteristics based on its local and global network structure. 
+1. Each node has a embedding vector representation 
+2. Nodes in the same "network neighborhood" also have close vector representations in the embedding space. 
+3. Nodes in the same network neighborhood are selected using "biased random walk". 
+
+
+BFS: Structure 
+DFS: Homophily 
+
+
+
+## DiffPool
+DIFFPOOL (Differentiable Pooling) is a hierarchical graph neural network (GNN) method that learns to cluster nodes dynamically and creates coarser representations of a graph. Unlike traditional GNNs that operate at a fixed scale, DIFFPOOL automatically learns hierarchical structures by clustering nodes in a differentiable manner.
+
+### DiffPool Layer
+<p align="center">
+  <img src="images/diffpool_layer.png" alt="diff pool layer"  />
+</p>
+
+
+### Link Loss and Entropy Loss 
+
+
+### DiffPoolNet
+
+
+
+
+
+
+---
+
+## GraphSAGE
+Videos:
+https://www.youtube.com/watch?v=3AzphNf5ja8
+
