@@ -67,7 +67,8 @@ class Node2Vec:
                  num_walks: int = 10, 
                  p: float = 1.0, 
                  q: float = 1.0, 
-                 workers: int = 1) -> None:
+                 device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                 ) -> None:
         """
         Parameters:
             adj_list (Dict[int, List[int]]): Graph as an adjacency list.
@@ -77,16 +78,15 @@ class Node2Vec:
             num_walks (int): Number of walks per node.
             p (float): Return parameter (controls likelihood of revisiting a node).
             q (float): In-Out parameter (controls exploration/exploitation).
-            workers (int): Number of worker threads (not used in this Hugging Face example).
         """
         self.adj_list: Dict[int, List[int]] = adj_list
         self.nodes: List[int] = list(adj_list.keys())
         self.emb_dim: int = emb_dim
         self.walk_length: int = walk_length
         self.num_walks: int = num_walks
+        self.device = device
         self.p: float = p 
         self.q: float = q
-        self.workers: int = workers
         self.alias_nodes: Dict[int, Tuple[List[int], np.ndarray, List[float]]] = {}
         self.alias_edges: Dict[Tuple[int, int], Tuple[List[int], np.ndarray, np.ndarray]] = {}
         
@@ -162,44 +162,52 @@ class Node2Vec:
                 walks.append(walk_str)
         return walks 
 
-    def train_with_hf(self, hf_model_name: str = "all-MiniLM-L6-v2") -> SentenceTransformer:
+
+    def train_with_hf(self, hf_model_name: str = "sentence-transformers/all-MiniLM-L6-v2") -> Tuple[SentenceTransformer, Dict[str, torch.Tensor]]:
         """
-        Instead of training a Word2Vec model with gensim, we use a pre-trained
-        Hugging Face SentenceTransformer model to embed our random walks.
-        
+        Use a pre-trained Hugging Face SentenceTransformer model to obtain node-level embeddings.
+        For each random walk, we obtain token embeddings (one per node in the walk) using a separately loaded 
+        Hugging Face model. We then aggregate the embeddings of each node over all walks (by averaging) 
+        to obtain a final node embedding.
+
         Parameters:
             hf_model_name (str): Name of the pre-trained Hugging Face model.
-        
+            
         Returns:
-            model: A SentenceTransformer model that can encode the walks.
+            model: A SentenceTransformer model.
+            node_embeddings: A dictionary mapping node IDs (as strings) to their aggregated embedding (torch.Tensor).
         """
         # Generate random walks; each walk is a list of node strings.
         walks: List[List[str]] = self.generate_walks()
-        # Join node IDs to form a "sentence" for each walk.
-        sentences: List[str] = [" ".join(walk) for walk in walks]
+    
+        # Load a pre-trained SentenceTransformer model.
+        model: SentenceTransformer = SentenceTransformer(hf_model_name, device="cpu")
+        # Also load the tokenizer and underlying Hugging Face model separately.
+        tokenizer = AutoTokenizer.from_pretrained(hf_model_name)
+        auto_model = AutoModel.from_pretrained(hf_model_name)
+        auto_model.config.output_hidden_states = True  # Enable hidden states.
         
-        # Load a pre-trained SentenceTransformer model from Hugging Face.
-        model: SentenceTransformer = SentenceTransformer(hf_model_name)
-        
-        # Optionally, you might fine-tune the model on your walks or simply use it to encode.
-        # Here, we just encode the sentences to get walk embeddings.
-        walk_embeddings = model.encode(sentences, convert_to_tensor=True)
-        print("Generated embeddings for random walks.")
-        
-        # You can now use these embeddings for downstream tasks.
-        return model
+        node_emb_dict: Dict[str, List[torch.Tensor]] = {}
 
-# Example usage:
-# if __name__ == "__main__":
-#     # Define a simple graph as an adjacency list.
-#     adj_list_example = {
-#         0: [1, 2],
-#         1: [0, 2, 3],
-#         2: [0, 1, 3],
-#         3: [1, 2]
-#     }
-    
-#     node2vec_model = Node2Vec(adj_list=adj_list_example, walk_length=10, num_walks=5, p=1.0, q=1.0)
-    
-#     # Instead of training Word2Vec, we use a Hugging Face model.
-#     hf_model = node2vec_model.train_with_hf("all-MiniLM-L6-v2")
+        for walk in walks:
+            # Tokenize the walk; is_split_into_words=True makes sure each node is a separate token.
+            encoded = tokenizer(walk, is_split_into_words=True, return_tensors="pt", padding=True, truncation=True)
+            with torch.no_grad():
+                # Pass the tokenized input through the model.
+                outputs = auto_model(**encoded, output_hidden_states=True, return_dict=True)
+            # Retrieve the last hidden state: shape (1, seq_len, hidden_dim)
+            last_hidden_state = outputs["hidden_states"][-1]
+
+            # Iterate through each token (node) in the walk.
+            for idx, token in enumerate(walk):
+                token_emb = last_hidden_state[0, idx, :]  # Shape: (hidden_dim,)
+                if token not in node_emb_dict:
+                    node_emb_dict[token] = []
+                node_emb_dict[token].append(token_emb)
+
+        # Aggregate embeddings for each node (e.g., by averaging).
+        final_node_embeddings: Dict[str, torch.Tensor] = {}
+        for node, emb_list in node_emb_dict.items():
+            final_node_embeddings[node] = torch.mean(torch.stack(emb_list), dim=0)
+        
+        return model, final_node_embeddings
