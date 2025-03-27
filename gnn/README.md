@@ -271,7 +271,7 @@ DiffPool is trained end-to-end using a combination of three loss functions:
 This loss, denoted as $\mathcal{L}_{\text{class}}$, is computed on the final graph representation for tasks such as graph classification. For example, if you use cross-entropy loss for classification, it is given by:
 
 $$
-\mathcal{L}_{\text{class}} = -\sum_{i=1}^{C} y_i \log(\hat{y}_i),
+\mathcal{L}_{\text{class}} = -\sum_{i=1}^{C} y_i \log(\hat{y}_i)
 $$
 
 where $y_i$ is the ground truth label (often one-hot encoded) for class $i$, and $\hat{y}_i$ is the predicted probability for that class.
