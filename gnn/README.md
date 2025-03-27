@@ -273,6 +273,9 @@ This loss, denoted as $\mathcal{L}_{\text{class}}$, is computed on the final gra
 $$
 \mathcal{L}_{\text{class}} = -\sum_{i=1}^{C} y_i \log(\hat{y}_i)
 $$
+$$
+\Sigma
+$$
 
 where 
 - $y_i$ is the ground truth label (often one-hot encoded) for class $i$
