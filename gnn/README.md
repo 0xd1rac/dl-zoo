@@ -2,12 +2,11 @@
 # Graph Neural Networks 
 
 ## Table of Contents 
-- [GCN] (#graph-convolutional-network)
-- [GAT] (#graph-attention-network)
-- [Node2Vec] (#node2vec)
-- [DiffPool] (#diffpool)
-- [DeepWalk] (#deepwalk)
-
+- [GCN](#graph-convolutional-network)
+- [GAT](#graph-attention-network)
+- [Node2Vec](#node2vec)
+- [DiffPool](#diffpool)
+- [DeepWalk](#deepwalk)
 
 ## Graph Convolutional Network
 ### Overview
