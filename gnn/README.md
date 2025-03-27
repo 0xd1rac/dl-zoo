@@ -1,8 +1,16 @@
 
 # Graph Neural Networks 
 
+## Table of Contents 
+- [GCN] (#graph-convolutional-network)
+- [GAT] (#graph-attention-network)
+- [Node2Vec] (#node2vec)
+- [DiffPool] (#diffpool)
+- [DeepWalk] (#deepwalk)
 
-## Graph Convolutional Networks 
+
+## Graph Convolutional Network
+### Overview
 A standard convolution in Deep Learnin such as in Convolutional Neural
 Networks applies a filter to a signal (image). However in discrete 
 graph structures, there is no natural grid-like structure 
@@ -36,134 +44,6 @@ where:
 Is $v$ part of $N(v)$ : for this paper, yes since there are self loops, $\tilde{A} = A + I$
 
 
-### The Graph Laplacian 
-A graph Laplacian, $L$ is a a matrix that helps us analyze graph structures. The Laplacian matrix is useful because its eigenvalues and eigenvectors provide important structural information about the graph. There are different forms of Laplacians, but in this paper the normalized graph Laplacian is used:
-
-$$
-L = I_N - D^{-\frac{1}{2}}AD^{-\frac{1}{2}}
-$$
-
-where 
-- $I_N$ is the identity matrix
-- $D$ is the degree matrix 
-- $A$ is the adjacency matrix 
-
-The graph Fourier transform is the process of transforming a signal on the graph into the spectral domain using the eigenvectors of $L$. the eigendecomposition of L is:
-
-$$
-L = U \Lambda U^{T}
-$$
-
-where 
-- $U$ is the matrix of eigenvectors
-- $\Lambda$ is the diagonal matrix of eigenvalues
-
-### Spectral Graph Convolution Defn:
-We can define spectral convolutions as the multiplication of a signal $x$ by a filter function $g{\theta}$ in the Fourier domain. 
-
-$$
-g_{\theta} * x = Ug_{\theta}U^Tx
-$$
-
-where 
-
-- $x$: A signal on the graph (feature for each node, could be a representation vector)
-- $g_{\theta}$: A filter applied in the Fourier domain
-- $U$: The matrix of eigenvectors of the normalized graph Laplacian
-- $U^{T}x$: Graph Fourier transform of x
-- $g_{\theta}U^{T}x$: Applies filter in the Fourier domain
-- $Ug_{\theta}U^{T}x$ Inverse Fourir transform to convert back to node space. 
-
-However, computing this directly is computationally expensive because:
-- It requires computing the full eigendecomposition of $L$ which takes $O(N^2)$ operations.
-- Multiplication with U can be costly for large graphs. 
-
-### Spectral Graph Convolution Approximation using Chebyshev polynomials:
-To make spectral convolutions computationally feasible, we approximate the filter function $g_\theta(\Lambda)$ using Chebyshev polynomials, which are special polynomials that help approximate functions efficiently. 
-
-$$
-g_\theta(\Lambda) \approx \Sigma_{k=0}^{K}\theta_{k}'T_{k}(\tilde{\Lambda})
-$$
-
-where:
-- $\tilde{\Lambda} = \frac{2}{\lambda_{max}}\Lambda - I_{N}$ is rescaled version of $\Lambda$
-- $\theta_{k}'$ are Cheybyshev coefficients, which are parameters that we learn.
-- The  Chebyshev polynomials are defined recursively as:
-  
-$$
-T_k(x)=2xT_{k-1}(x) - T_{k-2}(x)
-$$
-
-where $T_0(x) = 1$ and $T_1(x) = x$
-
-Since $\tilde{\Lambda}$ is defined via $\tilde{L}$, the convolution operation follows:
-
-$$
-g_{\theta'}  * x \approx \Sigma_{k=0}^{K}\theta_{k}'T_{k}(\tilde{L})x
-$$
-
-where $\tilde{L} = \frac{2}{\lambda_{max}}L-I_N$ is the rescaled Laplacian.
-
-This is useful as instead of computing the full eigendecomposition of $L$, we can:
-1. Use the rescaled Laplacian $\tilde{L}$
-2. Compute the Chebyshev polynomooisl $T_k{\tilde{L}}$ recursively.
-3. Apply the convolution efficiently ins $O(|E|) time. 
-
-This bypasses the expensive Fourier transform and allows graph convolutions to be computed locally.
-
-
-### Graph Convolutional Networks 
-A Graph Convolutional Network (GCN) is built by stacking multiple graph convolution layers, followed by non-linear activation functions. The idea is that each layer aggregates information from neighboring nodes, similar to how convolutional layers work in CNNs for images. Previously we defined the general form for spectral graph convolutions as:
-
-$$
-g_{\theta'}  * x \approx \Sigma_{k=0}^{K}\theta_{k}'T_{k}(\tilde{L})x
-$$
-
-This applies a K-th order Cheybyshev polynomial expansion, which makes it computational feasible. Now what if we set K=1? Setting K=1, the filter functions simplifies to
-
-$$
-g_{\theta'} * x \approx \theta_{0}'x + \theta_{1}'(L-I_N)x
-$$
-
-Expanding $L = I_N - D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$, we get:
-
-$$
-g_{\theta'} * x = \theta_{0}'x - \theta_{1}'D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x
-$$
-
-Instead of two parameters $\theta_{0}'$ and $\theta_{1}'$, we merge them into a single parameter $\theta$. 
-
-$$
-g_{\theta'} * x \approx \theta(I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x
-$$
-
-The issue now is that $I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$ can lead to exploding or vanishing gradients when stacking multiple layers (some eigenvalue reason). To fix this we apply the renormalization trick: 
-
-$$
-I_N + D^{-\frac{1}{2}}AD^{-\frac{1}{2}}  \rightarrow \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}
-$$
-
-$$
-g_{\theta'} * x \approx \theta( \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}})x
-$$
-
-where 
-- $\tilde{A} = A + I_{N}$ (adds self-loops the graph)
-- $\tilde{D_{ii}} = \Sigma_j{\tilde{A}_{ij}}$ (degree matrix for $\tilde{A}$ )
-
-This modification ensures that 
-- The eigenvalues remain bounded between $[0,2]$ preventing instability
-- Each node includes its own features in addition to its neigbors
-
-### Extending to mult-feature graphs 
-So far, we've considered a single feature per node. But real-world graphs (e.g., social networks, molecular graphs) often have multiple features per node. To generalize to multiple input channels, we represent the node features as a matrix $X \in \mathbb{R}^{N \times C}$ (feature matrix of all the nodes) where 
-- $N$ is the number of nodes in the graph 
-- $C$ is the number of input features per node. 
-
-$$
-g_\theta \star X \approx \tilde{D}^{- \frac{1}{2}} \tilde{A} \tilde{D}^{- \frac{1}{2}} X \Theta
-$$
-
 ### GCN Propagation Rule
 
 $$
@@ -177,75 +57,250 @@ where:
 - $W^{(l)}$ is a layer-specific trainable weight matrix.
 - $\sigma(\cdot)$ denotes an activation function, such as ReLU: $\text{ReLU}(x) = \max(0, x)$.
 - $H^{(0)} = X$ is the input feature matrix of shape $\mathbb{R}^{N \times D}$.
+
+
+### Code Sample
+```python
+print('test')
+```
 ---
-## Graph Attention Networks
-### Message and Aggregation View 
+## Graph Attention Network
 
-The general paradigm of Graph Neura Layers have been 
-1. Message
-2. Aggregate
+### Overview
+Graph Neural Networks (GNNs) typically follow a **message passing** framework, consisting of two main steps at each layer:
 
-Mathematically we define this as:
+1. **Message**: Each node collects information (messages) from its neighbors.  
+2. **Aggregate**: These messages are aggregated (e.g., by summation or averaging), usually followed by a non-linear transformation.
 
-$$
-h_{v}^{l} = \sigma(\Sigma_{u \in N(v)} \alpha_{u,v}^{l} W^{l}  h_{u}^{l-1})
-$$
 
-where for GCNS:
+### GNN Layer Formula
+
+At layer $l$, the updated node representation for node $v$ is given by:
 
 $$
-\alpha_{u,v}^{l} = \frac{1}{\sqrt{|N(u)||N(v)|}}
+h_{v}^{l} = \sigma\left(\sum_{u \in N(v)} \alpha_{u,v}^{l} W^{l} h_{u}^{l-1}\right)
 $$
 
+- $h_v^l$: Node feature of node $v$ at layer $l$  
+- $N(v)$: Set of neighbors of node $v$  
+- $\sigma$: Non-linear activation function (e.g., ReLU)
 
-For GATs:
+
+### Attention Coefficient: $\alpha_{u,v}^l$
+
+The key difference between **GCNs** and **GATs** lies in how $\alpha_{u,v}^l$ is computed.
+
+**GCN (Graph Convolutional Network)**
 
 $$
-\alpha_{u,v}^{l} = Softmax(a(h^{l}_{u},h^{l}_{v}))
+\alpha_{u,v}^{l} = \frac{1}{\sqrt{|N(u)| |N(v)|}}
 $$
 
+This uses fixed, normalized weights for neighboring nodes.
+
+**GAT (Graph Attention Network)**
 
 $$
-a(h^{l}_{u},h^{l}_{v}) = LeakyReLU(\psi^{T} * [W'{l}h_{u}^{l-1}||W^{l}h^{l-1}_{v}])
+\alpha_{u,v}^{l} = \text{Softmax}_u\left(a(h_u^l, h_v^l)\right)
 $$
 
-where:
-- **$h_u^{l}$, $h_v^{l}$**: The **feature representations** of nodes $u$ and $v$ at layer $l$.
-- **$W^l$**: The **learnable weight matrix** at layer $l$, which projects node features to a new space.
-- **$\alpha_{u,v}^{l}$**: The **attention coefficient** that determines how much node $v$ attends to node $u$.
-- **$a(h_u^{l}, h_v^{l})$**: The **attention score function** that computes unnormalized attention scores between nodes $u$ and $v$.
-- **$\psi \in \mathbb{R}^{F}$**: A **learnable attention vector**, where $F$ is the feature dimension.
-- **$||$**: Denotes **concatenation** of the feature vectors.
-- **$\text{LeakyReLU}(x)$**: The **Leaky ReLU activation function**, applied to introduce non-linearity.
+Where the attention score function $a$ is defined as:
 
-<<<<<<< HEAD
+$$
+a(h_u^l, h_v^l) = \text{LeakyReLU}\left(\psi^\top [W'^l h_u^{l-1} \,||\, W^l h_v^{l-1}]\right)
+$$
+
+- $\psi \in \mathbb{R}^{F}$: Learnable attention vector  
+- $W^l$, $W'^l$: Learnable weight matrices at layer $l$  
+- $||$: Concatenation operator  
+- $\text{LeakyReLU}$: Non-linear activation function to allow negative values
+
+The **Softmax** ensures that attention coefficients for each node’s neighbors sum to 1.
+
+### Code Sample
+```python
+print('test')
+```
+
 
 ## Node2Vec
-In node2vec, each node in the network is assigned a vector—a set of continuous, low-dimensional numbers—that captures its characteristics based on its local and global network structure. 
-1. Each node has a embedding vector representation 
-2. Nodes in the same "network neighborhood" also have close vector representations in the embedding space. 
-3. Nodes in the same network neighborhood are selected using "biased random walk". 
+### Overview 
+Node2vec is an algorithm we can use to find a feature vector representation of each node in a graph. Node2Vec is a transductive method, meaning that it learns embeddings specifically for the nodes present in the training graph and does not generalize to unseen nodes or graphs without retraining. To dumb it down, if new nodes are introduced later, Node2Vec won't be able to provide embeddings for them unless the model is retrained on the expanded graph.
+
+### How the node embeddings are learned
+**Step 1: Generate 2nd order biased random walks to sample node neighborhoods** </br>
+
+By sampling a node's neighbors, we are able to capture the local structure of the graph relative to a node. This local context is similar to how surrounding words provide context in language models. We could consider every single neighbor or path but this is extremtly computationally expensive. Sampling a subset of the neighborhood makes the process more efficient while still preserving the essential structural information. 
+
+Node2Vec performs multiple random walks starting from each node. Unlike a simple random walk, these walks are biased using two parameters:
+- $p$ (Return Parameter): Controls the likelihood revisiting previous node, thus tuning the probability of a walk "backtracking".
+- $q$ (In-Out Parameter): Regulates whether the walk is more exploratory (moving further away from the source node) or more localized (staying close the source node). 
 
 
-BFS: Structure 
-DFS: Homophily 
+We set the unnormalized transitional probabilities as $\pi_{vx} = \alpha_{pq}(t,x) * w_{vx}$ where 
+- $w_{vx}$: weight of the edge $(v,x)$
+- $\alpha_{p,q}(t,x)$: bias factor
 
+
+$$
+\alpha_{p,q}(t, x) = 
+\begin{cases}
+\frac{1}{p}, & \text{if } d_{tx} = 0 \\
+1,           & \text{if } d_{tx} = 1 \\
+\frac{1}{q}, & \text{if } d_{tx} = 2
+\end{cases}
+$$
+
+where 
+- $t$: previous node in the walk
+- $v$: current node in the walk 
+- $x$: candidate neighbor of $v$ to move to text (t is one of the candidates)
+- $d_{tx}$: shortest path between node $t$ and node $x$ in the graph.
+
+
+
+**Step 2: Learning with the Skip-Gram Model**
+
+Multiple random walks of fixed length was done from each node in the graph. Each random walk is treated as a "sentence" that captures the context in which nodes co-occur. All the random walks together form a corpus, much like sentences in text corpus. Each walk is like a sentence and each node is like a word. The skip-gram model is then trained on this corpus. For each node in a walk, its neighboring nodes (within a specific window) are treated as the context. The model learns embeddings by trying to predict the context nodes from the target node. Because nodes that appear together in walks tend to be structurally or functionally related, the skip-gram model produces embeddings that capture both local and global network structure.
+
+
+Node2vec uses the skip-gram model objective, which is to maximize the probability of observing a node's neighbors given its embeddings. Mathematically for a node $u$ with context nodes $N(u)$, the objective is: 
+
+$$
+\max_{\Phi} \sum_{u \in V} \log \Pr\bigl(N(u) \mid \Phi(u)\bigr)
+$$
+
+where: 
+- $\Phi(u)$ is the embedding of node $u$.
+- $ \Pr\bigl(N(u) \mid \Phi(u)\bigr)$ is modelled using softmax function over the dot products between embeddings.
+
+Similar to Word2Vec, negative sampling was used to optimize this objective. The model learns to distinguish between actual context nodes (positive samples) and randomly sampled nodes (negative samples).
+
+
+
+### Node2Vec Algorithm
+
+<p align="center">
+  <img src="images/node2vec_algo.png" alt="Node2Vec Algo" width="600" height="500" />
+</p>
+
+### Code Sample
+```python
+print('test')
+```
 
 
 ## DiffPool
-DIFFPOOL (Differentiable Pooling) is a hierarchical graph neural network (GNN) method that learns to cluster nodes dynamically and creates coarser representations of a graph. Unlike traditional GNNs that operate at a fixed scale, DIFFPOOL automatically learns hierarchical structures by clustering nodes in a differentiable manner.
+DiffPool (Differentiable Pooling) is a hierarchical graph neural network (GNN) method that learns to cluster nodes dynamically and creates coarser representations of a graph. Unlike traditional GNNs that operate at a fixed scale, DiffPool automatically learns hierarchical structures by clustering nodes in a differentiable manner.
+
+### Overview
+In many graph tasks, especially graph-level classification, we want to capture multi-scale or hierarchical properties of the graph. DiffPool addresses this by stacking multiple GNN "pooling" layers. Each pooling layer:
+1. Generate Node Embeddings: A GNN encoder produces updated node features.
+2. Predicts Cluster Assignments: A GNN assignment module produces a soft cluster assignment matrix.
+3. Pools the Graph: Using these assignments, the nodes (and their features) are aggregated into a smaller set of "super-nodes", creating a coarser graph representation. 
+
+This process can be repeated multiple times to form a hierarchy of increasingly coarse graphs, analogous to pooling operations in CNNs.
+
+
 
 ### DiffPool Layer
 <p align="center">
   <img src="images/diffpool_layer.png" alt="diff pool layer"  />
 </p>
 
+**Inputs to Layer** $l$:
 
-### Link Loss and Entropy Loss 
+- **Adjacency** $\mathbf{A}^{(l-1)}$ (size $n^{(l-1)} \times n^{(l-1)}$):  
+  The graph structure from the previous layer (or the original graph if $l=1$).
+
+- **Node Features** $\mathbf{H}^{(l-1)}$ (size $n^{(l-1)} \times d^{(l-1)}$):  
+  The node embeddings from the previous layer (or the initial features if $l=1$).
+
+**GNN for Embedding** $\text{GNN}_{\text{embed}}^{(l)}$:
+
+This GNN updates node embeddings using $\mathbf{A}^{(l-1)}$ and $\mathbf{H}^{(l-1)}$. The output is
+
+$$
+\mathbf{H}^{(l)} = \text{GNN}_{\text{embed}}^{(l)}(\mathbf{A}^{(l-1)}, \mathbf{H}^{(l-1)}).
+$$
+
+Here, $\mathbf{H}^{(l)}$ is the new feature matrix of size $n^{(l-1)} \times d^{(l)}$.
+
+**GNN for Assignment** $\text{GNN}_{\text{assign}}^{(l)}$:
+
+In parallel, another GNN learns a cluster assignment matrix $\mathbf{S}^{(l)}$, given by
+
+$$
+\mathbf{S}^{(l)} = \text{Softmax}\bigl(\text{GNN}_{\text{assign}}^{(l)}(\mathbf{A}^{(l-1)}, \mathbf{H}^{(l-1)})\bigr),
+$$
+
+where $\mathbf{S}^{(l)}$ has size $n^{(l-1)} \times n^{(l)}$. Each row corresponds to a node, and each column corresponds to one of the $n^{(l)}$ clusters at layer $l$. The softmax ensures that each row is a valid probability distribution.
+
+**Pooling (Feature & Adjacency)**:
+
+- **Feature Pooling**:
+
+  $$ 
+  \mathbf{H}_{\text{pooled}}^{(l)} = \mathbf{S}^{(l)\top}\,\mathbf{H}^{(l)},
+  $$
+
+  which aggregates the node embeddings into $n^{(l)}$ “super-nodes.”
+
+- **Adjacency Pooling**:
+
+  $$
+  \mathbf{A}^{(l)}_{pooled} = \mathbf{S}^{(l)\top}\,\mathbf{A}^{(l-1)}\,\mathbf{S}^{(l)},
+  $$
+
+  forming the new adjacency matrix among the $n^{(l)}$ clusters.
+
+**Outputs of Layer** $l$:
+
+- **Coarser Graph**: $(\mathbf{A}^{(l)},\,\mathbf{H}_{\text{pooled}}^{(l)})$
+- **Cluster Assignments**: $\mathbf{S}^{(l)}$
 
 
-### DiffPoolNet
+### Training DiffPool
+DiffPool is trained end-to-end using a combination of three loss functions:
+1. Classfication loss 
+2. Link reconstruction loss 
+3. Entropy regularization loss
 
+**Classifcation Loss**
 
----
+This loss, denoted as $\mathcal{L}_{\text{class}}$, is computed on the final graph representation for tasks such as graph classification. For example, if you use cross-entropy loss for classification, it is given by
+
+$$
+\mathcal{L}_{\text{class}} = -\sum_{i=1}^{C} y_i \log(\hat{y}_i),
+$$
+
+where $y_i$ is the ground truth label (often one-hot encoded) for class $i$, and $\hat{y}_i$ is the predicted probability for that class.
+
+**Link Reconstruction Loss**
+
+The link reconstruction loss, $\mathcal{L}_{\text{link}}$, encourages the pooling operation to preserve the graph's connectivity. One common formulation is to compare the original adjacency matrix with the one reconstructed from the soft assignments. For instance:
+
+The link reconstruction loss, often denoted $\mathcal{L}_{\text{link}}$, encourages the pooling operation to preserve the graph’s connectivity. Two common formulations appear in the literature:
+
+1. **Direct Reconstruction**:
+
+   $$
+   \mathcal{L}_{\text{link}} 
+   = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \bigr\|_F^2,
+   $$
+
+   where $\mathbf{A}^{(l-1)}$ is the adjacency matrix at layer $l-1$, and $\mathbf{S}^{(l)}$ is the soft cluster assignment matrix at layer $l$. The norm $\|\cdot\|_F^2$ denotes the squared Frobenius norm.
+
+2. **Adjacency-Inclusive Reconstruction**:
+
+   $$
+   \mathcal{L}_{\text{link}} 
+   = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \,\mathbf{A}^{(l-1)} \bigr\|_F^2.
+   $$
+
+### Code Sample
+```python
+print('test')
+```
+
 
