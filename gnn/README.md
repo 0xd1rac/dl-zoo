@@ -239,17 +239,17 @@ where $\mathbf{S}^{(l)}$ has size $n^{(l-1)} \times n^{(l)}$. Each row correspon
 
 - **Feature Pooling**:
 
-  $$ 
-  \mathbf{H}_{\text{pooled}}^{(l)} = \mathbf{S}^{(l)\top}\,\mathbf{H}^{(l)},
-  $$
+$$
+\mathbf{H}_{\text{pooled}}^{(l)} = \mathbf{S}^{(l)\top}\,\mathbf{H}^{(l)},
+$$
 
-  which aggregates the node embeddings into $n^{(l)}$ “super-nodes.”
+which aggregates the node embeddings into $n^{(l)}$ “super-nodes.”
 
 - **Adjacency Pooling**:
 
-  $$
-  \mathbf{A}^{(l)}_{pooled} = \mathbf{S}^{(l)\top}\,\mathbf{A}^{(l-1)}\,\mathbf{S}^{(l)},
-  $$
+$$
+\mathbf{A}^{(l)}_{pooled} = \mathbf{S}^{(l)\top}\,\mathbf{A}^{(l-1)}\,\mathbf{S}^{(l)},
+$$
 
   forming the new adjacency matrix among the $n^{(l)}$ clusters.
 
