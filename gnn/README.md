@@ -283,19 +283,19 @@ The link reconstruction loss, often denoted $\mathcal{L}_{\text{link}}$, encoura
 
 1. **Direct Reconstruction**:
 
-   $$
-   \mathcal{L}_{\text{link}} 
-   = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \bigr\|_F^2,
-   $$
+ $$
+ \mathcal{L}_{\text{link}} 
+ = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \bigr\|_F^2,
+ $$
 
    where $\mathbf{A}^{(l-1)}$ is the adjacency matrix at layer $l-1$, and $\mathbf{S}^{(l)}$ is the soft cluster assignment matrix at layer $l$. The norm $\|\cdot\|_F^2$ denotes the squared Frobenius norm.
 
 2. **Adjacency-Inclusive Reconstruction**:
 
-   $$
-   \mathcal{L}_{\text{link}} 
-   = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \,\mathbf{A}^{(l-1)} \bigr\|_F^2.
-   $$
+ $$
+ \mathcal{L}_{\text{link}} 
+ = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \,\mathbf{A}^{(l-1)} \bigr\|_F^2.
+ $$
 
 ### Code Sample
 ```python
