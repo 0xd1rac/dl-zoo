@@ -265,9 +265,10 @@ DiffPool is trained end-to-end using a combination of three loss functions:
 2. Link reconstruction loss 
 3. Entropy regularization loss
 
-**Classifcation Loss**
 
-This loss, denoted as $\mathcal{L}_{\text{class}}$, is computed on the final graph representation for tasks such as graph classification. For example, if you use cross-entropy loss for classification, it is given by
+**Classification Loss**
+
+This loss, denoted as $\mathcal{L}_{\text{class}}$, is computed on the final graph representation for tasks such as graph classification. For example, if you use cross-entropy loss for classification, it is given by:
 
 $$
 \mathcal{L}_{\text{class}} = -\sum_{i=1}^{C} y_i \log(\hat{y}_i),
@@ -275,27 +276,25 @@ $$
 
 where $y_i$ is the ground truth label (often one-hot encoded) for class $i$, and $\hat{y}_i$ is the predicted probability for that class.
 
+---
+
 **Link Reconstruction Loss**
 
-The link reconstruction loss, $\mathcal{L}_{\text{link}}$, encourages the pooling operation to preserve the graph's connectivity. One common formulation is to compare the original adjacency matrix with the one reconstructed from the soft assignments. For instance:
-
-The link reconstruction loss, often denoted $\mathcal{L}_{\text{link}}$, encourages the pooling operation to preserve the graph’s connectivity. Two common formulations appear in the literature:
+The link reconstruction loss, $\mathcal{L}_{\text{link}}$, encourages the pooling operation to preserve the graph's connectivity. One common formulation is to compare the original adjacency matrix with the one reconstructed from the soft assignments. Two common formulations appear in the literature:
 
 1. **Direct Reconstruction**:
 
- $$
- \mathcal{L}_{\text{link}} 
- = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \bigr\|_F^2,
- $$
+   $$
+   \mathcal{L}_{\text{link}} = \left\| \mathbf{A}^{(l-1)} - \mathbf{S}^{(l)} {\mathbf{S}^{(l)}}^\top \right\|_F^2,
+   $$
 
-   where $\mathbf{A}^{(l-1)}$ is the adjacency matrix at layer $l-1$, and $\mathbf{S}^{(l)}$ is the soft cluster assignment matrix at layer $l$. The norm $\|\cdot\|_F^2$ denotes the squared Frobenius norm.
+   where $\mathbf{A}^{(l-1)}$ is the adjacency matrix at layer $l - 1$, and $\mathbf{S}^{(l)}$ is the soft cluster assignment matrix at layer $l$. The norm $\|\cdot\|_F^2$ denotes the squared Frobenius norm.
 
 2. **Adjacency-Inclusive Reconstruction**:
 
- $$
- \mathcal{L}_{\text{link}} 
- = \bigl\| \mathbf{A}^{(l-1)} \;-\; \mathbf{S}^{(l)}\,(\mathbf{S}^{(l)})^\top \,\mathbf{A}^{(l-1)} \bigr\|_F^2.
- $$
+   $$
+   \mathcal{L}_{\text{link}} = \left\| \mathbf{A}^{(l-1)} - \mathbf{S}^{(l)} {\mathbf{S}^{(l)}}^\top \mathbf{A}^{(l-1)} \right\|_F^2.
+   $$
 
 ### Code Sample
 ```python
