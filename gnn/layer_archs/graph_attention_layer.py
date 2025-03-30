@@ -46,13 +46,18 @@ class GATLayer(MessagePassing):
 
         return self.propagate(edge_index, x=x)
     
-    def message(self, x_i, x_j, index, ptr, size_i):
+    def message(self, x_j, x_i, index, ptr, size_i):
         """
         Message function for attention-based aggregation
         Args:
-            x_i (Tensor): Features of target nodes
+            (j) -> (i)
+
             x_j (Tensor): Features of source nodes
+            x_i (Tensor): Features of target nodes
+            
             index (Tensor): Edge index for attention calculation
+            ptr, size_i: help with segment-wise softmax (for efficiency)
+
         Returns:
             Attention-weighted features
         """

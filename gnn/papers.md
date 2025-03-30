@@ -1,15 +1,17 @@
 - [x] GCN
-- [ ] GAT
-- [ ] GraphSage
-- [ ] DeepWalk
-- [ ] Node2Vec
+- [x] GAT
+- [x] GraphSage
+- [x] DeepWalk
+- [x] Node2Vec
 - [ ] GIN
 - [ ] Variational Graph Auto-Encoder
 - [ ] Graph Autoencoder
 - [ ] Fast-GCN
 - [ ] Stochastic GCN
 - [ ] GraphSAINT
-- [ ] Learning Social Graph Topologies using Generative Adverserial Networks 
+- [ ] Learning Social Graph Topologies using Generative Adverserial 
+
+Networks 
 - [ ] NetGAN: Generating Graphs using Random Walks 
 - [ ] Principal Neighborhood Aggregation
 - [ ] Recurrent Graph Neural Network 
