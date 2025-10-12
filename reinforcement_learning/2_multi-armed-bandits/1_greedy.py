@@ -99,12 +99,15 @@ class Experiment:
         rewards_hist = []
         optimal_hits = []
 
-        for t in range(self.num_time_steps):
+        for _ in range(self.num_time_steps):
+
+            # Step 1: Action selection
             a = int(np.argmax(Q))
 
+            # Step 2: Reward Calculation
             r = self.actions[a].get_reward()
 
-            # incremental mean update for chosen action
+            # Step 3: Estimate updating
             counts[a] += 1 
             alpha = 1.0 / counts[a]
             Q[a] = Q[a] + alpha * (r - Q[a])
@@ -129,7 +132,8 @@ class Experiment:
         rewards_hist = []
         optimal_hits = []
 
-        for t in range(self.num_time_steps):
+        for _ in range(self.num_time_steps):
+            # Step 1: Action selection
             if np.random.rand() < epsilon: # super interesting
                 # explore 
                 a = np.random.randint(self.num_actions)
@@ -137,9 +141,10 @@ class Experiment:
                 # exploit 
                 a = int(np.argmax(Q))
 
+            # Step 2: Reward Calculation
             r = self.actions[a].get_reward()
 
-            # incremental mean update for chosen action
+            # Step 3: Estimate updating
             counts[a] += 1 
             alpha = 1.0 / counts[a]
             Q[a] = Q[a] + alpha * (r - Q[a])
@@ -155,22 +160,55 @@ class Experiment:
             "optimal_hits": optimal_hits
         }
 
+    def run_upper_confidence_bound_action_selection(self, c:float):
+        Q = np.full(self.num_actions, self.init_estimate, dtype=float)
+        counts = np.zeros(self.num_actions, dtype=int)
 
-exp = Experiment(num_time_steps=1000, num_actions=10, init_estimate=0)
-print(f"Max true reward: {exp.max_true_reward_mean}")
-greedy_ret = exp.run_greedy()
-eps_greedy_ret = exp.run_epsilon_greedy(epsilon=0.2)
+        actions_hist = []
+        rewards_hist = []
+        optimal_hits = []
+
+        for t in range(1, self.num_time_steps + 1):
+            # Step 1: Action selection
+            ucb_values = np.zeros(self.num_actions)
+            for a in range(self.num_actions):
+                if counts[a] == 0:
+                    ucb_values[a] = float('inf') # # ensure every action tried at least once
+
+                else: 
+                    ucb_values[a] = Q[a] + c * math.sqrt(math.log(t)/counts[a])
+            
+            a = int(np.argmax(ucb_values))
+
+            # Step 2: Reward Calculation
+            r = self.actions[a].get_reward()
+
+            # Step 3: Estimate updating
+            counts[a] += 1 
+            Q[a] += (r - Q[a]) / counts[a]
+
+            # --- Logging ---
+            actions_hist.append(a)
+            rewards_hist.append(r)
+            optimal_hits.append(int(a == np.argmax([act.true_reward_mean for act in self.actions])))
+
+        return {
+            "actions": np.array(actions_hist),
+            "rewards": np.array(rewards_hist),
+            "optimal_hits": np.array(optimal_hits)
+        }
 
 
-actions = np.array(eps_greedy_ret["actions"])
-rewards = np.array(eps_greedy_ret["rewards"])
-optimal = np.array(eps_greedy_ret["optimal_hits"])
-
-Plotter.plot_chosen_action_over_time(actions)
-Plotter.plot_reward_over_time(rewards)
+# exp = Experiment(num_time_steps=1000, num_actions=10, init_estimate=0)
+# print(f"Max true reward: {exp.max_true_reward_mean}")
+# greedy_ret = exp.run_greedy()
+# eps_greedy_ret = exp.run_epsilon_greedy(epsilon=0.2)
 
 
+# actions = np.array(eps_greedy_ret["actions"])
+# rewards = np.array(eps_greedy_ret["rewards"])
+# cum_avg_rewards =  np.cumsum(rewards) / np.arange(1, len(rewards)+1)
+# optimal = np.array(eps_greedy_ret["optimal_hits"])
 
 
-
-
+# Plotter.plot_reward_over_time(cum_avg_rewards
